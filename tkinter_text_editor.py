@@ -1,6 +1,6 @@
 import tkinter as tk
+from tkinter import simpledialog, messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
-from tkinter import messagebox
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -51,20 +51,23 @@ class TextEditor:
         btn_open = ttk.Button(frm_buttons, text="Open", command=self.open_file, bootstyle=PRIMARY)
         btn_save = ttk.Button(frm_buttons, text="Save", command=self.save_file, bootstyle=SUCCESS)
         btn_save_as = ttk.Button(frm_buttons, text="Save As...", command=self.save_as_file, bootstyle=SUCCESS)
+        btn_search = ttk.Button(frm_buttons, text="Search", command=self.search_text, bootstyle=PRIMARY)
         btn_exit = ttk.Button(frm_buttons, text="Exit", command=self.on_closing, bootstyle=DANGER)
 
         btn_new.grid(row=0, column=0, padx=5, pady=5)
         btn_open.grid(row=0, column=1, padx=5, pady=5)
         btn_save.grid(row=0, column=2, padx=5, pady=5)
         btn_save_as.grid(row=0, column=3, padx=5, pady=5)
-        btn_exit.grid(row=0, column=5, padx=5, pady=5)
+        btn_search.grid(row=0, column=4, padx=5, pady=5)
+        btn_exit.grid(row=0, column=6, padx=5, pady=5)
 
         frm_buttons.grid_columnconfigure(0, weight=0)
         frm_buttons.grid_columnconfigure(1, weight=0)
         frm_buttons.grid_columnconfigure(2, weight=0)
         frm_buttons.grid_columnconfigure(3, weight=0)
-        frm_buttons.grid_columnconfigure(4, weight=1)
-        frm_buttons.grid_columnconfigure(5, weight=0)
+        frm_buttons.grid_columnconfigure(4, weight=0)
+        frm_buttons.grid_columnconfigure(5, weight=1)
+        frm_buttons.grid_columnconfigure(6, weight=0)
 
         self.text_area.bind('<KeyRelease>', self.update_line_numbers)
         self.text_area.bind('<MouseWheel>', self.update_line_numbers)
@@ -147,6 +150,25 @@ class TextEditor:
         self.window.title(f"Text Editor - {filepath}")
         self.text_area.edit_modified(False)
         self.update_line_numbers()
+
+    def search_text(self):
+        search_term = simpledialog.askstring("Search", "Enter text to search:")
+        if not search_term:
+            return
+
+        self.text_area.tag_remove("highlight", 1.0, tk.END)
+
+        start = 1.0
+        while True:
+            start = self.text_area.search(search_term, start, stopindex=tk.END)
+            if not start:
+                break
+
+            end = f"{start}+{len(search_term)}c"
+            self.text_area.tag_add("highlight", start, end)
+            start = end
+
+        self.text_area.tag_configure("highlight", background="black")
 
     def on_closing(self):
         if self.text_area.edit_modified():
