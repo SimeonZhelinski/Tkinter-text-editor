@@ -2,7 +2,7 @@
 
 This Tkinter-based application provides a simple and user-friendly interface for creating and editing text files.
 
-<img src="https://github.com/SimeonZhelinski/Tkinter-text-editor/text_editor.JPG" alt="Editor" width="400"/>
+<img src="https://github.com/SimeonZhelinski/Tkinter-text-editor/blob/main/text_editor.JPG" alt="Editor" width="400"/>
 
 ## ✍️ Features
 
