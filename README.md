@@ -2,6 +2,8 @@
 
 This Tkinter-based application provides a simple and user-friendly interface for creating and editing text files.
 
+<img src="https://github.com/SimeonZhelinski/Tkinter-text-editor/text_editor.JPG" alt="Editor" width="400"/>
+
 ## ✍️ Features
 
 - **🧮 Line Numbers**: Navigate your text. Our handy line numbers enhance readability and make it easier to find your way through your documents.
